@@ -8,10 +8,10 @@
   "development": {
   },
   "scripts": [
-    "index.js",
-    "sanitizer.js",
+    "html4.js",
     "URI.js",
-    "html4.js"
+    "index.js",
+    "sanitizer.js"
   ],
   "testScripts": [
   ]
