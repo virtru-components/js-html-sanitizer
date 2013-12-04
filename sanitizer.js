@@ -1,3 +1,6 @@
+var html4 = require("./html4.js");
+var URI = require("./uri.js");
+
 // Copyright (C) 2006 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,11 +31,10 @@
  *
  * @author mikesamuel@gmail.com
  * @author jasvir@gmail.com
+ * \@requires html4, URI
+ * \@overrides window
  * \@provides html, html_sanitize
  */
-
-require('html4.js')
-require('URI.js');
 
 // The Turkish i seems to be a non-issue, but abort in case it is.
 if ('I'.toLowerCase() !== 'i') { throw 'I/i problem'; }
@@ -40,7 +42,6 @@ if ('I'.toLowerCase() !== 'i') { throw 'I/i problem'; }
 /**
  * \@namespace
  */
-
 var html = (function(html4) {
 
     // For closure compiler
@@ -867,7 +868,7 @@ var html = (function(html4) {
      *     names and values, where a null value means to omit the attribute.
      */
     function sanitizeAttribs(tagName, attribs,
-        opt_naiveUriRewriter, opt_nmTokenPolicy, opt_logger) {
+                             opt_naiveUriRewriter, opt_nmTokenPolicy, opt_logger) {
         // TODO(felix8a): it's obnoxious that domado duplicates much of this
         // TODO(felix8a): maybe consistently enforce constraints like target=
         for (var i = 0; i < attribs.length; i += 2) {
@@ -1037,7 +1038,7 @@ var html = (function(html4) {
      *     lists of classes.  If not given, such attributes are left unchanged.
      */
     function sanitize(inputHtml,
-        opt_naiveUriRewriter, opt_nmTokenPolicy, opt_logger) {
+                      opt_naiveUriRewriter, opt_nmTokenPolicy, opt_logger) {
         var tagPolicy = makeTagPolicy(
             opt_naiveUriRewriter, opt_nmTokenPolicy, opt_logger);
         return sanitizeWithPolicy(inputHtml, tagPolicy);
@@ -1057,5 +1058,43 @@ var html = (function(html4) {
     return html;
 })(html4);
 
-module.exports = exports;
-exports.htmlSanitizer = html;
+var html_sanitize = html['sanitize'];
+
+// Exports for Closure compiler.  Note this file is also cajoled
+// for domado and run in an environment without 'window'
+if (typeof window !== 'undefined') {
+    window['html'] = html;
+    window['html_sanitize'] = html_sanitize;
+}
+
+Sanitizer = {};
+
+// Ensure backwards compatibility
+Sanitizer.escapeAttrib = html.escapeAttrib;
+Sanitizer.makeHtmlSanitizer = html.makeHtmlSanitizer;
+Sanitizer.makeSaxParser = html.makeSaxParser;
+Sanitizer.makeTagPolicy = html.makeTagPolicy;
+Sanitizer.normalizeRCData = html.normalizeRCData
+Sanitizer.sanitizeAttribs = html.sanitizeAttribs
+Sanitizer.sanitizeWithPolicy = html.sanitizeWithPolicy
+Sanitizer.unescapeEntities = html.unescapeEntities
+Sanitizer.escape = html.escapeAttrib;
+
+// https://github.com/theSmaw/Caja-HTML-Sanitizer/issues/8
+Sanitizer.sanitize = function(inputHtml, opt_naiveUriRewriter, opt_nmTokenPolicy, opt_logger) {
+    if (typeof(inputHtml) === "string") {
+        inputHtml = inputHtml.replace(/<([a-zA-Z]+)([^>]*)\/>/g, '<$1$2></$1>');
+    }
+    return html.sanitize(inputHtml, opt_naiveUriRewriter, opt_nmTokenPolicy, opt_logger)
+}
+
+// the browser, add 'Sanitizer' as a global object via a string identifier,
+// for Closure Compiler "advanced" mode.
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        exports = module.exports = Sanitizer;
+    }
+    exports.Sanitizer = Sanitizer;
+} else {
+    this.Sanitizer = Sanitizer;
+}
