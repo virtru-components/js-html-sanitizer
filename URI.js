@@ -714,3 +714,10 @@ var URI = (function () {
 
     return URI;
 })();
+
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        exports = module.exports = URI;
+    }
+    exports.URI = URI;
+}
