@@ -349,3 +349,10 @@ html4 .ELEMENTS = {
 
 html4 .URIEFFECTS = {};
 html4 .LOADERTYPES = {}
+
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+        exports = module.exports = html4;
+    }
+    exports.URI = html4;
+}
