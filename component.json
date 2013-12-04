@@ -9,7 +9,9 @@
   },
   "scripts": [
     "index.js",
-    "sanitizer.js"
+    "sanitizer.js",
+    "URI.js",
+    "html4.js"
   ],
   "testScripts": [
   ]
