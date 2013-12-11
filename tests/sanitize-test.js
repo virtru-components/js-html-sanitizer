@@ -182,7 +182,11 @@ describe('HTML Sanitizer', function() {
     });
 
     it('should sanitize style tags', function() {
-        assert.equal('', sanitizer.sanitize('<style> * { background-color: red }</style>', uriPolicy, nmTokenPolicy));
+        assert.equal('', sanitizer.sanitize('<style> * { background-color: red; }</style>', uriPolicy, nmTokenPolicy));
+    });
+
+    it('shouldnt sanitize virtru protocol for mobile app link', function() {
+        assert.equal('<a href="u:virtru://www.virtru.com">Test Link</a>', sanitizer.sanitize('<a href="virtru://www.virtru.com">Test Link</a>', uriPolicy, nmTokenPolicy));
     });
 
     it('should sanitize with uri policy', function() {
