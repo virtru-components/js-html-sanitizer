@@ -181,6 +181,10 @@ describe('HTML Sanitizer', function() {
         assert.equal('x', sanitizer.sanitize('x<a\nbc', uriPolicy, nmTokenPolicy));
     });
 
+    it('should sanitize style tags', function() {
+        assert.equal('', sanitizer.sanitize('<style> * { background-color: red }</style>', uriPolicy, nmTokenPolicy));
+    });
+
     it('should sanitize with uri policy', function() {
 
         assert.equal('<a href="http://www.example.com/">hi</a>', sanitizer.sanitize('<a href="http://www.example.com/">hi</a>', function(uri) {
