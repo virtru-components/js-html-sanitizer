@@ -14,6 +14,7 @@ html4 .atype = {
     'FRAME_TARGET': 10
 };
 html4 .ATTRIBS = {
+    '*::data-message-id': 0,
     '*::class': 9,
     '*::dir': 0,
     '*::id': 4,
