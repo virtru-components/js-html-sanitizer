@@ -36,54 +36,104 @@ describe('HTML Sanitizer', function() {
         assert.equal('', sanitizer.sanitize(''))
     });
 
+    it('should not sanitize font face', function() {
+        assert.equal('<font face="comic sans ms, sans-serif">Font Style</font>', sanitizer.sanitize('<font face="comic sans ms, sans-serif">Font Style</font>'));
+    });
+
+    it('should not sanitize googles blockquotes', function() {
+        assert.equal('<blockquote style="margin: 0 0 0 40px ; border: none ; padding: 0px"><div style="text-align: left">Text Indentation</div><div style="text-align: left"><br></div></blockquote>', sanitizer.sanitize('<blockquote style="margin:0 0 0 40px;border:none;padding:0px"><div style="text-align:left">Text Indentation</div><div style="text-align:left"><br></div></blockquote>'));
+    });
+
+    it('should not sanitize font size + font size', function() {
+        assert.equal('<font face="arial, helvetica, sans-serif" size="4">Font Size</font>', sanitizer.sanitize('<font face="arial, helvetica, sans-serif" size="4">Font Size</font>'));
+    });
+
+    it('should not sanitize style attributes for div', function() {
+        assert.equal('<div style="color: blue ; background-color: red">hello world</div>', sanitizer.sanitize('<div style="color: blue; background-color: red;">hello world</div>'));
+    });
+
+    it('should not sanitize bold italic and underlined text', function() {
+        assert.equal('<font face="arial, helvetica, sans-serif"><b><i><u>Text-Decorations Bold Italic Underline</u></i></b></font>', sanitizer.sanitize('<font face="arial, helvetica, sans-serif"><b><i><u>Text-Decorations Bold Italic Underline</u></i></b></font>'));
+    });
+
+    it('should not sanitize font tag with style attribute (background-color)', function() {
+        assert.equal('<font face="arial, helvetica, sans-serif" style="background-color: rgb(147 , 196 , 125)">Font Background Color</font>', sanitizer.sanitize('<font face="arial, helvetica, sans-serif" style="background-color:rgb(147,196,125)">Font Background Color</font>'));
+    });
+
+    it('should not sanitize font tag with color attribute', function() {
+        assert.equal('<font color="#0000ff">Font Color</font>', sanitizer.sanitize('<font color="#0000ff">Font Color</font>'));
+    });
+
+    it('should not sanitize div tag with style attribute (text-align)', function() {
+        assert.equal('<div style="text-align: center">Text Alignment</div>', sanitizer.sanitize('<div style="text-align:center">Text Alignment</div>'));
+    });
+
+    it('should not sanitize googles blockquote with gmail_quote class', function() {
+        assert.equal('<blockquote class="gmail_quote" style="margin: 0px 0px 0px 0.8ex ; border-left-width: 1px ; border-left-color: rgb(204 , 204 , 204) ; border-left-style: solid ; padding-left: 1ex">Text Quote&nbsp;</blockquote>', sanitizer.sanitize('<blockquote class="gmail_quote" style="margin: 0px 0px 0px 0.8ex ; border-left-width: 1px ; border-left-color: rgb(204 , 204 , 204);border-left-style: solid ; padding-left: 1ex">Text Quote&nbsp;</blockquote>'))
+    });
+
+    it('should not sanitize googles line-breaks', function() {
+        assert.equal('<div><br></div>', sanitizer.sanitize('<div><br></div>'));
+    });
+    
+
+
+    it('should not sanitize style attributes for li', function() {
+        assert.equal('<li style="color: blue ; background-color: red">hello world</li>', sanitizer.sanitize('<li style="color: blue; background-color: red;">hello world</li>'));
+    });
+
+    it('should not sanitize style attributes for p', function() {
+        assert.equal('<p style="color: blue ; background-color: red">hello world</p>', sanitizer.sanitize('<p style="color: blue; background-color: red;">hello world</p>'));
+    });
+
     it('should sanitize simple text', function() {
-        assert.equal('hello world', sanitizer.sanitize('hello world'))
+        assert.equal('hello world', sanitizer.sanitize('hello world'));
     });
 
     it('should sanitize entities', function() {
-        assert.equal('&lt;hello world&gt;', sanitizer.sanitize('&lt;hello world&gt;'))
+        assert.equal('&lt;hello world&gt;', sanitizer.sanitize('&lt;hello world&gt;'));
     });
 
     it('should sanitize more entities', function() {
-        assert.equal('&amp;amp&amp;&amp;&amp;amp', sanitizer.sanitize('&amp&amp;&&amp'))
+        assert.equal('&amp;amp&amp;&amp;&amp;amp', sanitizer.sanitize('&amp&amp;&&amp'));
     });
 
     it('should remove unknown tags', function() {
-        assert.equal('<b>hello <i>world</i></b>', sanitizer.sanitize('<u:y><b>hello <bogus><i>world</i></bogus></b>'))
+        assert.equal('<b>hello <i>world</i></b>', sanitizer.sanitize('<u:y><b>hello <bogus><i>world</i></bogus></b>'));
     });
 
     it('should remove unsafe tags', function() {
-        assert.equal('<b>hello <i>world</i></b>', sanitizer.sanitize('<b>hello <i>world</i><script src=foo.js></script></b>'))
+        assert.equal('<b>hello <i>world</i></b>', sanitizer.sanitize('<b>hello <i>world</i><script src=foo.js></script></b>'));
     });
 
     it('should remove unsafe attributes', function() {
-        assert.equal('<b>hello <i>world</i></b>', sanitizer.sanitize('<b>hello <i onclick="takeOverWorld(this)">world</i></b>'))
+        assert.equal('<b>hello <i>world</i></b>', sanitizer.sanitize('<b>hello <i onclick="takeOverWorld(this)">world</i></b>'));
     });
 
     it('should escape cruft', function() {
-        assert.equal('<b>hello <i>world&lt;</i></b> &amp; tomorrow the universe', sanitizer.sanitize('<b>hello <i>world<</i></b> & tomorrow the universe'))
+        assert.equal('<b>hello <i>world&lt;</i></b> &amp; tomorrow the universe', sanitizer.sanitize('<b>hello <i>world<</i></b> & tomorrow the universe'));
     });
 
     it('should remove tag cruft', function() {
-        assert.equal('<b id="p-foo">hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="foo" / -->hello <i>world<</i></b>', uriPolicy, nmTokenPolicy))
+        assert.equal('<b id="p-foo">hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="foo" / -->hello <i>world<</i></b>', uriPolicy, nmTokenPolicy));
     });
 
     it('should prefix ids and classes', function() {
-        assert.equal('<b id="p-foo" class="p-boo p-bar p-baz">hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="foo" class="boo bar baz">hello <i>world<</i></b>', uriPolicy, nmTokenPolicy))
+        assert.equal('<b id="p-foo" class="p-boo p-bar p-baz">hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="foo" class="boo bar baz">hello <i>world<</i></b>', uriPolicy, nmTokenPolicy));
     });
 
     it('should remove invalid ids and classes', function() {
-        assert.equal('<b>hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="a," class="b c/d e">hello <i class="i*j">world<</i></b>', uriPolicy, nmTokenPolicy))
+        assert.equal('<b>hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="a," class="b c/d e">hello <i class="i*j">world<</i></b>', uriPolicy, nmTokenPolicy));
     });
     it('should prefix usemap', function() {
-        assert.equal('<img usemap="#p-foo" src="u:http://bar">', sanitizer.sanitize('<img usemap="#foo" src="http://bar">', uriPolicy, nmTokenPolicy))
+        assert.equal('<img usemap="#p-foo" src="u:http://bar">', sanitizer.sanitize('<img usemap="#foo" src="http://bar">', uriPolicy, nmTokenPolicy));
     });
 
     it('should remove invalid usemaps', function() {
-        assert.equal('<b>hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="a," class="b c/d e">hello <i class="i*j">world<</i></b>', uriPolicy, nmTokenPolicy))
-        assert.equal('<img src="u:http://bar">', sanitizer.sanitize('<img src="http://bar">', uriPolicy, nmTokenPolicy))
-        assert.equal('<img src="u:http://bar">', sanitizer.sanitize('<img usemap="" src="http://bar">', uriPolicy, nmTokenPolicy))
-        assert.equal('<img src="u:http://bar">', sanitizer.sanitize('<img usemap="foo" src="http://bar">', uriPolicy, nmTokenPolicy))
+        assert.equal('<b>hello <i>world&lt;</i></b>', sanitizer.sanitize('<b id="a," class="b c/d e">hello <i class="i*j">world<</i></b>', uriPolicy, nmTokenPolicy));
+        assert.equal('<img src="u:http://bar">', sanitizer.sanitize('<img src="http://bar">', uriPolicy, nmTokenPolicy));
+        assert.equal('<img src="u:http://bar">', sanitizer.sanitize('<img usemap="" src="http://bar">', uriPolicy, nmTokenPolicy));
+        assert.equal('<img src="u:http://bar">', sanitizer.sanitize('<img usemap="foo" src="http://bar">', uriPolicy, nmTokenPolicy));
     });
 
     it('should sanitize non-string input', function() {
@@ -92,7 +142,7 @@ describe('HTML Sanitizer', function() {
             toString: function () {
                 return bad;
             }
-        }, uriPolicy, nmTokenPolicy))
+        }, uriPolicy, nmTokenPolicy));
     });
 
     it('should sanitize special chars in attributes', function() {

@@ -1,5 +1,6 @@
 var html4 = require("./html4.js");
 var URI = require("./URI.js");
+var CSS = require("./css.js");
 
 // Copyright (C) 2006 Google Inc.
 //

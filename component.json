@@ -12,7 +12,8 @@
     "html4.js",
     "URI.js",
     "index.js",
-    "sanitizer.js"
+    "sanitizer.js",
+    "css.js"
   ],
   "testScripts": [
       "tests/sanitize-test.js"
