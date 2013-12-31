@@ -355,5 +355,5 @@ if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
         exports = module.exports = html4;
     }
-    exports.URI = html4;
+    exports.html4 = html4;
 }
