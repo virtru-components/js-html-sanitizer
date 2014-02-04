@@ -7,7 +7,7 @@ Adapted from: https://github.com/theSmaw/Caja-HTML-Sanitizer
 
 ####Tests
 
-compontent karma-run
+component karma-run
 
 More Information
 ----------------
