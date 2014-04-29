@@ -20,6 +20,12 @@ html4 .ueffects = {
   'NEW_DOCUMENT': 2
 };
 
+html4.ltypes = {
+  'UNSANDBOXED': 2,
+  'SANDBOXED': 1,
+  'DATA': 0
+};
+
 html4 .ATTRIBS = {
     '*::data-message-id': 0,
     '*::class': 9,
