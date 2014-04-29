@@ -13,6 +13,19 @@ html4 .atype = {
     'CLASSES': 9,
     'FRAME_TARGET': 10
 };
+
+html4 .ueffects = {
+  'NOT_LOADED': 0,
+  'SAME_DOCUMENT': 1,
+  'NEW_DOCUMENT': 2
+};
+
+html4.ltypes = {
+  'UNSANDBOXED': 2,
+  'SANDBOXED': 1,
+  'DATA': 0
+};
+
 html4 .ATTRIBS = {
     '*::data-message-id': 0,
     '*::class': 9,
