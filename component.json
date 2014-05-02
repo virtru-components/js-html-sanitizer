@@ -2,7 +2,7 @@
   "name": "js-html-sanitizer",
   "repo": "virtru-components/js-html-sanitizer",
   "description": "HTML Sanitizer for XSS exlpoitation prevention",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
   },
   "development": {
