@@ -949,7 +949,7 @@ var decodeCss;
     // a performance bug. This workaround should become unnecessary after
     // Firefox 34. https://bugzilla.mozilla.org/show_bug.cgi?id=1081175
     // https://code.google.com/p/google-caja/issues/detail?id=1941
-    cssText = ('\uffff' + cssText).replace(/^\uffff/, '');
+    cssText = (String.fromCharCode(0xFFFF) + cssText).replace(/^\uffff/, '');
 
     // // Normalize CRLF & CR to LF.
     cssText = cssText.replace(/\r\n?/g, '\n');
