@@ -1393,7 +1393,12 @@ var sanitizeMediaQuery = undefined;
       ':)?'
   );
 
-  var ALLOWED_URI_SCHEMES = /^(?:https?|mailto)$/i;
+  /**
+   * Add values here if we want to support more URI schemes
+   *
+   * @type {RegExp}
+   */
+  var ALLOWED_URI_SCHEMES = /^(?:https?|mailto|data)$/i;
 
   function resolveUri(baseUri, uri) {
     if (baseUri) {
