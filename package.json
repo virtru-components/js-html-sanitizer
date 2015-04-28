@@ -1,0 +1,9 @@
+{
+  "name": "js-html-sanitizer",
+  "repo": "virtru-components/js-html-sanitizer",
+  "description": "js-html-sanitizer",
+  "version": "0.1.5",
+  "dependencies": {
+  },
+  "license": "MIT"
+}
