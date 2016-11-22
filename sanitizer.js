@@ -67,7 +67,7 @@ var html = (function(html4) {
         'AMP': '&',
         'quot': '"',
         'apos': '\'',
-        'nbsp': '\240'
+        'nbsp': String.fromCharCode(0xA0)
     };
 
     // Patterns for types of entity/character reference names.
