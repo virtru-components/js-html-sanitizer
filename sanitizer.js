@@ -1066,9 +1066,8 @@ var html_sanitize = html['sanitize'];
 if (typeof window !== 'undefined') {
     window['html'] = html;
     window['html_sanitize'] = html_sanitize;
+    window['Sanitizer'] = {};
 }
-
-Sanitizer = {};
 
 // Ensure backwards compatibility
 Sanitizer.escapeAttrib = html.escapeAttrib;
