@@ -29,6 +29,9 @@ html4.ltypes = {
 html4 .ATTRIBS = {
     '*::data-message-id': 0,
     '*::data-size': 0,
+    '*::data-name': 0,
+    '*::data-tdo-id': 0,
+    '*::data-policy-uuid': 0,
     '*::class': 9,
     '*::dir': 0,
     '*::id': 4,
