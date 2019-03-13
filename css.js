@@ -124,8 +124,35 @@ var cssSchema = (function () {
         'justify' ], [ 'list-item' ], [ 'local' ], [ 'medium' ], [ 'mix' ], [
         'none' ], [ 'normal' ], [ 'once' ], [ 'repeat' ], [ 'scroll' ], [
         'separate' ], [ 'small-caps' ], [ 'spell-out' ], [ 'to' ], [ 'visible'
-      ] ];
+      ], ['center', 'flex-start', 'flex-end', 'space-around', 'unset', 'right', 'left', 'end', 'start' ],
+      ['wrap'], ['column', 'column-reverse', 'row', 'row-reverse', 'unset', 'initial']
+    ];
     var schema = {
+      'flex-wrap': {
+        'cssPropBits': 512,
+        'cssLitGroup': [ L[ 81 ] ],
+        'cssFns': [ ]
+      },
+      'align-items': {
+        'cssPropBits': 512,
+        'cssLitGroup': [ L[ 80 ] ],
+        'cssFns': [ ]
+      },
+      'align-content': {
+        'cssPropBits': 512,
+        'cssLitGroup': [ L[ 80 ] ],
+        'cssFns': [ ]
+      },
+      'flex-direction': {
+        'cssPropBits': 512,
+        'cssLitGroup': [ L[ 82 ] ],
+        'cssFns': [ ]
+      },
+      'justify-content': {
+        'cssPropBits': 512,
+        'cssLitGroup': [ L[ 80 ] ],
+        'cssFns': [ ]
+      },
       'animation': {
         'cssPropBits': 517,
         'cssLitGroup': [ L[ 10 ], L[ 24 ], L[ 29 ], L[ 44 ], L[ 47 ], L[ 53 ],
