@@ -4,6 +4,7 @@ var CSS = require("./css.js");
 
 // Check if window is available. If not using self (for correct work in service workers
 var globalScope = {};
+
 if (typeof window !== 'undefined') {
     globalScope = window;
 } else if (typeof self !== 'undefined') {
