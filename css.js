@@ -4,7 +4,13 @@
  * \@provides cssSchema, CSS_PROP_BIT_QUANTITY, CSS_PROP_BIT_HASH_VALUE, CSS_PROP_BIT_NEGATIVE_QUANTITY, CSS_PROP_BIT_QSTRING, CSS_PROP_BIT_URL, CSS_PROP_BIT_UNRESERVED_WORD, CSS_PROP_BIT_UNICODE_RANGE, CSS_PROP_BIT_GLOBAL_NAME, CSS_PROP_BIT_PROPERTY_NAME */
 
 // Check if window is available. If not using self (for correct work in service workers
-var globalScope = typeof window !== 'undefined' ? window : self;
+var globalScope = {};
+
+if (typeof window !== 'undefined') {
+  globalScope = window;
+} else if (typeof self !== 'undefined') {
+  globalScope = self;
+}
 
 /**
  * @const

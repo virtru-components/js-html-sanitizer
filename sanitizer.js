@@ -3,7 +3,13 @@ var URI = require("./URI.js");
 var CSS = require("./css.js");
 
 // Check if window is available. If not using self (for correct work in service workers
-var globalScope = typeof window !== 'undefined' ? window : self;
+var globalScope = {};
+
+if (typeof window !== 'undefined') {
+    globalScope = window;
+} else if (typeof self !== 'undefined') {
+    globalScope = self;
+}
 
 
 // Copyright (C) 2006 Google Inc.
