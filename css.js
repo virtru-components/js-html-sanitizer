@@ -2,6 +2,10 @@
  * Licensed under the Apache Licence Version 2.0
  * \@overrides window
  * \@provides cssSchema, CSS_PROP_BIT_QUANTITY, CSS_PROP_BIT_HASH_VALUE, CSS_PROP_BIT_NEGATIVE_QUANTITY, CSS_PROP_BIT_QSTRING, CSS_PROP_BIT_URL, CSS_PROP_BIT_UNRESERVED_WORD, CSS_PROP_BIT_UNICODE_RANGE, CSS_PROP_BIT_GLOBAL_NAME, CSS_PROP_BIT_PROPERTY_NAME */
+
+// Check if window is available. If not using self (for correct work in service workers
+var globalScope = typeof window !== 'undefined' ? window : self;
+
 /**
  * @const
  * @type {number}
@@ -732,9 +736,8 @@ var cssSchema = (function () {
     }
     return schema;
   })();
-if (typeof window !== 'undefined') {
-  window['cssSchema'] = cssSchema;
-}
+
+globalScope['cssSchema'] = cssSchema;
 
 
 // CSS Lexer
@@ -998,10 +1001,9 @@ var decodeCss;
 })();
 
 // Exports for closure compiler.
-if (typeof window !== 'undefined') {
-  window['lexCss'] = lexCss;
-  window['decodeCss'] = decodeCss;
-}
+
+globalScope['lexCss'] = lexCss;
+globalScope['decodeCss'] = decodeCss;
 
 // CSS Parser
 
@@ -1309,10 +1311,9 @@ var parseCssDeclarations;
 })();
 
 // Exports for closure compiler.
-if (typeof window !== 'undefined') {
-  window['parseCssStylesheet'] = parseCssStylesheet;
-  window['parseCssDeclarations'] = parseCssDeclarations;
-}
+
+globalScope['parseCssStylesheet'] = parseCssStylesheet;
+globalScope['parseCssDeclarations'] = parseCssDeclarations;
 
 
 /**
@@ -2316,9 +2317,8 @@ var sanitizeMediaQuery = undefined;
 })();
 
 // Exports for closure compiler.
-if (typeof window !== 'undefined') {
-  window['sanitizeCssProperty'] = sanitizeCssProperty;
-  window['sanitizeCssSelectorList'] = sanitizeCssSelectorList;
-  window['sanitizeStylesheet'] = sanitizeStylesheet;
-  window['sanitizeMediaQuery'] = sanitizeMediaQuery;
-}
+
+globalScope['sanitizeCssProperty'] = sanitizeCssProperty;
+globalScope['sanitizeCssSelectorList'] = sanitizeCssSelectorList;
+globalScope['sanitizeStylesheet'] = sanitizeStylesheet;
+globalScope['sanitizeMediaQuery'] = sanitizeMediaQuery;

@@ -2,6 +2,10 @@ var html4 = require("./html4.js");
 var URI = require("./URI.js");
 var CSS = require("./css.js");
 
+// Check if window is available. If not using self (for correct work in service workers
+var globalScope = typeof window !== 'undefined' ? window : self;
+
+
 // Copyright (C) 2006 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,11 +51,10 @@ var html = (function(html4) {
 
     // For closure compiler
     var parseCssDeclarations, sanitizeCssProperty, cssSchema;
-    if ('undefined' !== typeof window) {
-        parseCssDeclarations = window['parseCssDeclarations'];
-        sanitizeCssProperty = window['sanitizeCssProperty'];
-        cssSchema = window['cssSchema'];
-    }
+
+    parseCssDeclarations = globalScope['parseCssDeclarations'];
+    sanitizeCssProperty = globalScope['sanitizeCssProperty'];
+    cssSchema = globalScope['cssSchema'];
 
     // The keys of this object must be 'quoted' or JSCompiler will mangle them!
     // This is a partial list -- lookupEntity() uses the host browser's parser
@@ -1063,10 +1066,9 @@ var html_sanitize = html['sanitize'];
 
 // Exports for Closure compiler.  Note this file is also cajoled
 // for domado and run in an environment without 'window'
-if (typeof window !== 'undefined') {
-    window['html'] = html;
-    window['html_sanitize'] = html_sanitize;
-}
+
+globalScope['html'] = html;
+globalScope['html_sanitize'] = html_sanitize;
 
 Sanitizer = {};
 
